@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIRE-X｜"決まる採用"を現場からつくる採用代行（RPO）</title>
+<meta name="description" content="採用は「マーケティング×面談力」。応募数1.8倍・面談率8%→19%・辞退率52%→20%。成果コミット型の採用代行 HIRE-X（株式会社Clutch）。無料診断実施中。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0e13;
+    --bg2:#12151d;
+    --ink:#f4f4f2;
+    --ink-dim:rgba(244,244,242,.66);
+    --accent:#e5ff3d;
+    --accent-ink:#11130a;
+    --danger:#ff5c47;
+    --paper:#f6f4ee;
+    --paper-ink:#15171c;
+    --paper-dim:#5a5e66;
+    --line:rgba(244,244,242,.14);
+    --maxw:1080px;
+    --radius:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg);color:var(--ink);
+    line-height:1.85;font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{padding:96px 0}
+  .en{font-family:"Oswald","Noto Sans JP",sans-serif;letter-spacing:.14em}
+
+  /* ---------- reveal animation ---------- */
+  .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .rv.on{opacity:1;transform:none}
+  .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed;inset:0 0 auto 0;z-index:100;
+    background:rgba(12,14,19,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .logo{font-family:"Oswald",sans-serif;font-weight:700;font-size:22px;letter-spacing:.08em}
+  .logo em{color:var(--accent);font-style:normal}
+  .nav-links{display:flex;gap:28px;font-size:13px;color:var(--ink-dim)}
+  .nav-links a:hover{color:var(--ink)}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+    background:var(--accent);color:var(--accent-ink);
+    font-weight:900;border-radius:999px;
+    padding:14px 30px;font-size:15px;
+    transition:transform .18s ease,box-shadow .18s ease;
+    box-shadow:0 6px 24px rgba(229,255,61,.25);
+    border:none;cursor:pointer;font-family:inherit;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(229,255,61,.4)}
+  .btn.sm{padding:10px 20px;font-size:13px}
+  .btn.big{padding:20px 44px;font-size:17px}
+  .btn .arw{transition:transform .18s}
+  .btn:hover .arw{transform:translateX(4px)}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;padding:170px 0 110px;
+    background:
+      radial-gradient(900px 500px at 85% -10%,rgba(229,255,61,.14),transparent 60%),
+      radial-gradient(700px 500px at -10% 110%,rgba(255,92,71,.10),transparent 60%),
+      var(--bg);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"HIRE-X";position:absolute;right:-40px;bottom:-60px;
+    font-family:"Oswald",sans-serif;font-weight:700;font-size:220px;
+    color:transparent;-webkit-text-stroke:1px rgba(244,244,242,.07);
+    letter-spacing:.02em;pointer-events:none;line-height:1;
+  }
+  .hero-tag{
+    display:inline-block;border:1px solid var(--accent);color:var(--accent);
+    font-size:12.5px;font-weight:700;letter-spacing:.18em;
+    padding:6px 16px;border-radius:999px;margin-bottom:28px;
+  }
+  h1{
+    font-size:clamp(30px,5.2vw,54px);font-weight:900;line-height:1.42;
+    letter-spacing:.01em;margin-bottom:26px;
+  }
+  h1 .strike{position:relative;white-space:nowrap}
+  h1 .strike::after{
+    content:"";position:absolute;left:-2%;right:-2%;top:54%;height:5px;
+    background:var(--danger);transform:rotate(-2deg);border-radius:3px;
+  }
+  h1 .hl{color:var(--accent)}
+  .hero-sub{max-width:620px;color:var(--ink-dim);font-size:15.5px;margin-bottom:38px}
+  .hero-sub strong{color:var(--ink)}
+  .hero-cta{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .hero-note{font-size:12.5px;color:var(--ink-dim)}
+
+  /* ---------- stats ---------- */
+  .stats{padding:0 0 96px}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .stat{
+    background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 22px;text-align:center;position:relative;overflow:hidden;
+  }
+  .stat::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent)}
+  .stat .lbl{font-size:12.5px;color:var(--ink-dim);letter-spacing:.1em;margin-bottom:6px}
+  .stat .num{font-family:"Oswald",sans-serif;font-weight:700;font-size:40px;line-height:1.1;color:var(--accent)}
+  .stat .num small{font-size:18px;margin-left:2px}
+  .stat .from{font-size:12px;color:var(--ink-dim);margin-top:4px}
+  .stats-note{font-size:11.5px;color:var(--ink-dim);text-align:right;margin-top:14px}
+
+  /* ---------- section heading ---------- */
+  .sec-head{margin-bottom:56px}
+  .sec-en{font-family:"Oswald",sans-serif;color:var(--accent);font-size:13px;letter-spacing:.28em;font-weight:700;margin-bottom:12px}
+  h2{font-size:clamp(24px,3.6vw,38px);font-weight:900;line-height:1.5}
+  .sec-lead{margin-top:18px;color:var(--ink-dim);max-width:680px;font-size:15px}
+  .paper .sec-lead{color:var(--paper-dim)}
+
+  /* ---------- sins ---------- */
+  .sins{background:var(--bg2)}
+  .sin-list{display:grid;gap:14px}
+  .sin{
+    display:grid;grid-template-columns:84px 1fr;gap:22px;align-items:center;
+    background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;
+  }
+  .sin-no{
+    font-family:"Oswald",sans-serif;font-weight:700;font-size:15px;color:var(--danger);
+    text-align:center;line-height:1.3;
+  }
+  .sin-no b{display:block;font-size:34px}
+  .sin h3{font-size:17.5px;font-weight:700;margin-bottom:4px}
+  .sin p{font-size:14px;color:var(--ink-dim)}
+  .sins-close{margin-top:40px;text-align:center;font-size:17px;font-weight:700}
+  .sins-close .hl{color:var(--accent)}
+
+  /* ---------- shift (paper) ---------- */
+  .paper{background:var(--paper);color:var(--paper-ink)}
+  .paper h2{color:var(--paper-ink)}
+  .shift-compare{display:grid;grid-template-columns:1fr 72px 1fr;gap:0;align-items:stretch;margin-top:8px}
+  .shift-card{border-radius:var(--radius);padding:34px 32px}
+  .shift-card.old{background:#e8e5dc;color:#6a6d74}
+  .shift-card.new{background:var(--paper-ink);color:var(--ink);box-shadow:0 18px 50px rgba(21,23,28,.28)}
+  .shift-card .tag{font-size:12px;font-weight:700;letter-spacing:.16em;margin-bottom:14px;display:block}
+  .shift-card.old .tag{color:#9a9da4}
+  .shift-card.new .tag{color:var(--accent)}
+  .shift-card h3{font-size:22px;font-weight:900;margin-bottom:14px}
+  .shift-card ul{list-style:none;display:grid;gap:10px;font-size:14px}
+  .shift-card li{padding-left:1.5em;position:relative}
+  .shift-card.old li::before{content:"✕";position:absolute;left:0;color:#b8541f;font-weight:700}
+  .shift-card.new li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .shift-arrow{display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--paper-dim)}
+  .funnel{margin-top:56px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .fstep{
+    background:#fff;border:1px solid #e3e0d7;border-radius:14px;padding:20px 16px;text-align:center;position:relative;
+  }
+  .fstep:not(:last-child)::after{
+    content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);
+    color:#b6b9bf;font-weight:700;z-index:2;
+  }
+  .fstep .fs-en{font-family:"Oswald",sans-serif;font-size:11px;letter-spacing:.2em;color:#b6b9bf}
+  .fstep .fs-jp{font-weight:900;font-size:17px;margin:2px 0}
+  .fstep .fs-note{font-size:12px;color:var(--paper-dim)}
+
+  /* ---------- services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .svc{
+    background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px;transition:transform .2s ease,border-color .2s ease;
+  }
+  .svc:hover{transform:translateY(-4px);border-color:rgba(229,255,61,.5)}
+  .svc .ic{font-size:26px;margin-bottom:14px;display:block}
+  .svc h3{font-size:17px;font-weight:700;margin-bottom:8px}
+  .svc p{font-size:13.5px;color:var(--ink-dim)}
+  .svc .badge{display:inline-block;background:rgba(229,255,61,.12);color:var(--accent);font-size:11px;font-weight:700;border-radius:6px;padding:2px 10px;margin-bottom:10px}
+
+  /* ---------- steps ---------- */
+  .steps{background:var(--bg2)}
+  .step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:step}
+  .step{
+    background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
+    padding:34px 28px;position:relative;
+  }
+  .step .no{
+    font-family:"Oswald",sans-serif;font-weight:700;font-size:52px;color:transparent;
+    -webkit-text-stroke:1.5px var(--accent);line-height:1;margin-bottom:18px;
+  }
+  .step h3{font-size:18px;font-weight:900;margin-bottom:8px}
+  .step .sub{font-size:12.5px;color:var(--accent);font-weight:700;letter-spacing:.08em;margin-bottom:10px}
+  .step p{font-size:13.5px;color:var(--ink-dim)}
+
+  /* ---------- cases ---------- */
+  .case-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .case{
+    background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 22px;
+  }
+  .case .ind{font-size:12px;color:var(--ink-dim);letter-spacing:.06em;margin-bottom:10px}
+  .case .res{font-size:20px;font-weight:900;line-height:1.5}
+  .case .res b{color:var(--accent);font-family:"Oswald",sans-serif;font-size:30px;font-weight:700;margin:0 2px}
+  .case .per{font-size:12.5px;color:var(--ink-dim);margin-top:8px}
+
+  /* ---------- pricing ---------- */
+  .pricing{background:var(--paper);color:var(--paper-ink)}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+  .plan{
+    background:#fff;border:1px solid #e3e0d7;border-radius:var(--radius);
+    padding:38px 30px;display:flex;flex-direction:column;position:relative;
+  }
+  .plan.popular{
+    background:var(--paper-ink);color:var(--ink);border-color:var(--paper-ink);
+    box-shadow:0 22px 60px rgba(21,23,28,.3);transform:scale(1.03);
+  }
+  .plan .pop-badge{
+    position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+    background:var(--accent);color:var(--accent-ink);font-size:12px;font-weight:900;
+    padding:5px 18px;border-radius:999px;white-space:nowrap;
+  }
+  .plan h3{font-size:19px;font-weight:900;margin-bottom:4px}
+  .plan .cap{font-size:12px;color:var(--paper-dim);margin-bottom:20px}
+  .plan.popular .cap{color:rgba(244,244,242,.6)}
+  .plan .price{font-family:"Oswald",sans-serif;font-weight:700;font-size:44px;line-height:1;margin-bottom:4px}
+  .plan .price small{font-size:15px;font-family:"Noto Sans JP",sans-serif;font-weight:700;margin-left:4px}
+  .plan .price .yen{font-size:20px}
+  .plan .slots{font-size:12.5px;font-weight:700;color:var(--danger);margin-bottom:22px}
+  .plan ul{list-style:none;display:grid;gap:9px;font-size:13.5px;margin-bottom:28px;flex:1}
+  .plan li{padding-left:1.5em;position:relative;color:var(--paper-dim)}
+  .plan.popular li{color:rgba(244,244,242,.8)}
+  .plan li::before{content:"✓";position:absolute;left:0;font-weight:900;color:#8a8d31}
+  .plan.popular li::before{color:var(--accent)}
+  .plan .btn{width:100%}
+  .plan.light .btn,.plan.full .btn{background:var(--paper-ink);color:var(--ink);box-shadow:none}
+  .price-notes{
+    margin-top:36px;background:#fff;border:1px solid #e3e0d7;border-radius:var(--radius);
+    padding:26px 30px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+  }
+  .pn .k{font-size:12px;color:var(--paper-dim);letter-spacing:.08em;margin-bottom:4px}
+  .pn .v{font-weight:900;font-size:15.5px}
+  .pn .v .hl{color:#b8541f}
+
+  /* ---------- diagnosis ---------- */
+  .diag-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .diag{
+    background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 28px;display:grid;grid-template-columns:56px 1fr;gap:20px;
+  }
+  .diag .no{
+    font-family:"Oswald",sans-serif;font-weight:700;font-size:24px;color:var(--accent);
+    border:1.5px solid var(--accent);border-radius:12px;width:56px;height:56px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .diag h3{font-size:16.5px;font-weight:700;margin-bottom:6px}
+  .diag p{font-size:13.5px;color:var(--ink-dim)}
+
+  /* ---------- faq ---------- */
+  .faq{background:var(--bg2)}
+  .faq-list{display:grid;gap:12px;max-width:800px}
+  details{
+    background:var(--bg);border:1px solid var(--line);border-radius:14px;
+    padding:0 26px;overflow:hidden;
+  }
+  summary{
+    cursor:pointer;list-style:none;padding:22px 0;font-weight:700;font-size:15.5px;
+    display:flex;align-items:center;gap:14px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"Q";font-family:"Oswald",sans-serif;color:var(--accent);font-weight:700;font-size:18px}
+  summary::after{content:"+";margin-left:auto;color:var(--ink-dim);font-size:20px;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details .a{padding:0 0 22px 32px;font-size:14px;color:var(--ink-dim)}
+
+  /* ---------- cta ---------- */
+  .cta{
+    text-align:center;position:relative;overflow:hidden;
+    background:
+      radial-gradient(700px 400px at 50% 120%,rgba(229,255,61,.16),transparent 65%),
+      var(--bg);
+  }
+  .cta h2{font-size:clamp(26px,4vw,42px);margin-bottom:16px}
+  .cta .hl{color:var(--accent)}
+  .cta p{color:var(--ink-dim);max-width:560px;margin:0 auto 40px;font-size:15px}
+  .cta-form{
+    max-width:520px;margin:0 auto;display:grid;gap:12px;text-align:left;
+  }
+  .cta-form input,.cta-form textarea{
+    width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:12px;
+    padding:15px 18px;color:var(--ink);font-family:inherit;font-size:14.5px;
+  }
+  .cta-form input:focus,.cta-form textarea:focus{outline:none;border-color:var(--accent)}
+  .cta-form ::placeholder{color:rgba(244,244,242,.35)}
+  .cta-note{font-size:12px;color:var(--ink-dim);margin-top:18px}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;font-size:12.5px;color:var(--ink-dim)}
+  .foot{display:flex;justify-content:space-between;align-items:center;max-width:var(--maxw);margin:0 auto;padding:0 24px;flex-wrap:wrap;gap:12px}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    section{padding:72px 0}
+    .stats-grid,.case-grid{grid-template-columns:repeat(2,1fr)}
+    .svc-grid,.step-grid,.price-grid,.diag-grid{grid-template-columns:1fr}
+    .plan.popular{transform:none}
+    .shift-compare{grid-template-columns:1fr}
+    .shift-arrow{transform:rotate(90deg);padding:8px 0}
+    .funnel{grid-template-columns:repeat(2,1fr)}
+    .fstep:not(:last-child)::after{display:none}
+    .price-notes{grid-template-columns:repeat(2,1fr)}
+    .nav-links{display:none}
+    .hero{padding:130px 0 80px}
+    .hero::after{font-size:120px}
+    .sin{grid-template-columns:1fr;gap:10px;padding:22px}
+    .sin-no{text-align:left;display:flex;align-items:baseline;gap:8px}
+    .sin-no b{font-size:26px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="#top">HIRE<em>-</em>X</a>
+    <nav class="nav-links">
+      <a href="#problem">よくある課題</a>
+      <a href="#service">サービス</a>
+      <a href="#cases">実績</a>
+      <a href="#pricing">料金</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn sm" href="#contact">無料診断を受ける</a>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="hero-tag rv">成果コミット型 採用代行（RPO）</span>
+    <h1 class="rv d1">
+      <span class="strike">「とりあえずIndeed出しとけ」</span>で<br>
+      人が採れる時代は、終わりました。<br>
+      採用は<span class="hl">マーケティング × 面談力</span>だ。
+    </h1>
+    <p class="hero-sub rv d2">
+      「良い人が来ない」のは、求職者のせいでも御社の魅力のせいでもありません。<strong>伝わらない求人原稿と、口説けない面談</strong>——「伝え方の敗北」です。採用は運（ガチャ）じゃない。<strong>"決まる採用"を現場からつくる</strong>、成果コミット型RPO「HIRE-X」。
+    </p>
+    <div class="hero-cta rv d3">
+      <a class="btn big" href="#contact">【無料診断】採用の穴、10分で丸裸にします<span class="arw">→</span></a>
+      <span class="hero-note">初期費用0円キャンペーン中／最低契約1ヶ月〜</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STATS ========== -->
+<div class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat rv"><div class="lbl">応募数</div><div class="num">1.8<small>倍</small></div><div class="from">原稿の営業コピー化で</div></div>
+      <div class="stat rv d1"><div class="lbl">面談率</div><div class="num">19<small>%</small></div><div class="from">8% から改善</div></div>
+      <div class="stat rv d2"><div class="lbl">辞退率</div><div class="num">20<small>%</small></div><div class="from">52% から激減</div></div>
+      <div class="stat rv d3"><div class="lbl">採用率</div><div class="num">2.5<small>倍</small></div><div class="from">面談フォロー徹底で</div></div>
+    </div>
+    <p class="stats-note">※ 自社支援実績より（自社調べ・2026年5月時点）</p>
+  </div>
+</div>
+
+<!-- ========== PROBLEM ========== -->
+<section class="sins" id="problem">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-en">PROBLEM</div>
+      <h2>9割の企業がハマる「5つの大罪」</h2>
+      <p class="sec-lead">応募が来ない・辞退される会社には、共通のパターンがあります。ひとつでも心当たりがあれば、御社の採用は「仕組み」から見直すタイミングです。</p>
+    </div>
+    <div class="sin-list">
+      <div class="sin rv"><div class="sin-no">大罪<b>01</b></div><div><h3>求人の魅力が「アットホームな職場です」</h3><p>今の求職者にとっては警戒度MAXのNGワード。魅力が言語化できていないサインです。</p></div></div>
+      <div class="sin rv"><div class="sin-no">大罪<b>02</b></div><div><h3>スカウトメールがコピペ感丸出しのスパム</h3><p>開封すらされない一斉送信。候補者は「自分に向けた一通」しか読みません。</p></div></div>
+      <div class="sin rv"><div class="sin-no">大罪<b>03</b></div><div><h3>「面接してやっている」という上から目線</h3><p>実は御社が求職者に"面接されている"側。選ばれる立場の自覚がないと辞退は止まりません。</p></div></div>
+      <div class="sin rv"><div class="sin-no">大罪<b>04</b></div><div><h3>応募が来ても、返信が遅れて競合に流出</h3><p>日々の業務に追われて対応が翌日以降に。優秀な層ほど早い会社に決めていきます。</p></div></div>
+      <div class="sin rv"><div class="sin-no">大罪<b>05</b></div><div><h3>辞退理由を「ご縁がなかった」で片付ける</h3><p>便利な言葉で思考停止。辞退には必ず理由があり、必ず対策があります。</p></div></div>
+    </div>
+    <p class="sins-close rv">これらは根性では直りません。<span class="hl">「仕組み」で直すのがHIRE-X</span>です。</p>
+  </div>
+</section>
+
+<!-- ========== PARADIGM SHIFT ========== -->
+<section class="paper" id="shift">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-en">PARADIGM SHIFT</div>
+      <h2>採用を「おみくじ」から「ファネル」に変える</h2>
+      <p class="sec-lead">採用は「求人を出して待つ」作業ではありません。認知→興味→比較→決断へと候補者を導く、極めて高度なマーケティングでありクロージング（営業）です。</p>
+    </div>
+    <div class="shift-compare">
+      <div class="shift-card old rv">
+        <span class="tag">従来の採用代行</span>
+        <h3>業務を"回す"だけの代行</h3>
+        <ul>
+          <li>求人票をテンプレで量産して掲載</li>
+          <li>応募が来るかは媒体と運まかせ</li>
+          <li>面接は日程調整まで。辞退はノータッチ</li>
+          <li>成果が出なくても月額は発生</li>
+        </ul>
+      </div>
+      <div class="shift-arrow">→</div>
+      <div class="shift-card new rv d1">
+        <span class="tag">HIRE-X</span>
+        <h3>採用成功から逆算する"決まる採用"</h3>
+        <ul>
+          <li>競合分析×営業コピーで「刺さる原稿」を設計</li>
+          <li>ABテストでデータドリブンに改善し続ける</li>
+          <li>応募後30分以内の一次対応で熱量を逃さない</li>
+          <li>意思決定を後押しする面談力で辞退を防ぐ</li>
+        </ul>
+      </div>
+    </div>
+    <div class="funnel">
+      <div class="fstep rv"><div class="fs-en">AWARENESS</div><div class="fs-jp">認知</div><div class="fs-note">求人原稿×媒体運用</div></div>
+      <div class="fstep rv d1"><div class="fs-en">INTEREST</div><div class="fs-jp">興味</div><div class="fs-note">刺さるスカウト</div></div>
+      <div class="fstep rv d2"><div class="fs-en">COMPARISON</div><div class="fs-jp">比較</div><div class="fs-note">高速一次対応×面談</div></div>
+      <div class="fstep rv d3"><div class="fs-en">DECISION</div><div class="fs-jp">決断</div><div class="fs-note">辞退防止×内定フォロー</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SERVICE ========== -->
+<section id="service">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-en">SERVICE</div>
+      <h2>HIRE-Xがもたらす「決まる採用」</h2>
+      <p class="sec-lead">戦略設計から「口説きの面談」まで、採用ファネルの全工程をフルカバー。丸投げの代行ではなく、御社の人事部に入り込む成果コミット型パートナーです。</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc rv"><span class="ic">✍️</span><span class="badge">無制限作成</span><h3>求人原稿の最適化</h3><p>競合分析×営業コピーライティングで「刺さる原稿」へ。媒体・職種を問わず何本でも作成します。</p></div>
+      <div class="svc rv d1"><span class="ic">📈</span><span class="badge">データドリブン</span><h3>Indeed運用改善</h3><p>掲載して終わりにしない。ABテストと数値分析で、クリック率・応募率を継続的に改善します。</p></div>
+      <div class="svc rv d2"><span class="ic">🎯</span><span class="badge">月200件</span><h3>攻めのスカウト代行</h3><p>Airワーク・Indeed・求人ボックス・ジョブメドレー。コピペではない「一人に向けた一通」を月200件。</p></div>
+      <div class="svc rv d3"><span class="ic">⚡</span><span class="badge">30分以内</span><h3>応募者への一次対応代行</h3><p>応募後30分以内にファーストコンタクト。候補者の熱量が最も高い瞬間を逃しません。</p></div>
+      <div class="svc rv d4"><span class="ic">🤝</span><span class="badge">辞退率52%→20%</span><h3>辞退防止・面接フォロー</h3><p>面談前の期待醸成から内定後のフォローまで。意思決定を後押しし、「ご縁がなかった」をなくします。</p></div>
+      <div class="svc rv d4"><span class="ic">🧭</span><span class="badge">伴走</span><h3>採用戦略の設計・改善会議</h3><p>採用成功から逆算したKPI設計と定例改善。歩留まりデータを見ながら次の一手を一緒に決めます。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 3 STEPS ========== -->
+<section class="steps">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-en">PROCESS</div>
+      <h2>成果につながる 3STEP 改善プロセス</h2>
+    </div>
+    <div class="step-grid">
+      <div class="step rv"><div class="no">01</div><div class="sub">最適化</div><h3>原稿 × 伝え方を作り直す</h3><p>現状の求人を診断し、NGワードを排除。競合と比較して「選ぶ理由」が伝わる原稿へ書き換えます。</p></div>
+      <div class="step rv d1"><div class="no">02</div><div class="sub">集客最大化</div><h3>Indeed運用×スカウトで母集団形成</h3><p>媒体運用の改善とスカウト月200件で応募数を最大化。データを見ながらABテストを回します。</p></div>
+      <div class="step rv d2"><div class="no">03</div><div class="sub">口説く</div><h3>一次対応 × 辞退防止で決め切る</h3><p>30分以内の一次対応と面談フォローで、応募から内定承諾までの歩留まりを徹底改善します。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CASES ========== -->
+<section id="cases">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-en">CASE STUDY</div>
+      <h2>支援事例</h2>
+      <p class="sec-lead">業種を問わず、採用ファネルの改善で成果を出しています。（自社調べ）</p>
+    </div>
+    <div class="case-grid">
+      <div class="case rv"><div class="ind">買取販売 A社</div><div class="res">3ヶ月で<b>4</b>名採用</div><div class="per">原稿刷新×Indeed運用改善</div></div>
+      <div class="case rv d1"><div class="ind">テレアポ営業 B社</div><div class="res">3ヶ月で<b>10</b>名採用</div><div class="per">スカウト×一次対応の高速化</div></div>
+      <div class="case rv d2"><div class="ind">美容業界 C社</div><div class="res">2ヶ月で<b>4</b>名採用</div><div class="per">訴求の営業コピー化</div></div>
+      <div class="case rv d3"><div class="ind">事務職採用 D社</div><div class="res">1ヶ月で<b>6</b>名採用</div><div class="per">面談フォローで辞退防止</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-en">PRICING</div>
+      <h2>料金プラン</h2>
+      <p class="sec-lead">支援品質を守るため受け入れ社数を限定しています。成果報酬は採用1名につき3〜5万円。</p>
+    </div>
+    <div class="price-grid">
+      <div class="plan light rv">
+        <h3>ライト</h3>
+        <div class="cap">まず一点突破で改善したい企業に</div>
+        <div class="price"><span class="yen">¥</span>120,000<small>/月（税別）</small></div>
+        <div class="slots">15社限定・残り8枠</div>
+        <ul>
+          <li>求人原稿の最適化（無制限）</li>
+          <li>Indeed運用改善</li>
+          <li>月次レポート・改善提案</li>
+        </ul>
+        <a class="btn" href="#contact">このプランで相談する</a>
+      </div>
+      <div class="plan popular rv d1">
+        <span class="pop-badge">人気No.1</span>
+        <h3>スタンダード</h3>
+        <div class="cap">集客から口説きまで任せたい企業に</div>
+        <div class="price"><span class="yen">¥</span>250,000<small>/月（税別）</small></div>
+        <div class="slots">30社限定・残り11枠</div>
+        <ul>
+          <li>ライトプランの全内容</li>
+          <li>スカウト代行 月200件</li>
+          <li>応募者への一次対応（30分以内）</li>
+          <li>辞退防止・面接フォロー</li>
+        </ul>
+        <a class="btn" href="#contact">このプランで相談する</a>
+      </div>
+      <div class="plan full rv d2">
+        <h3>フルカスタム</h3>
+        <div class="cap">採用部門を丸ごと強化したい企業に</div>
+        <div class="price"><span class="yen">¥</span>400,000<small>〜/月（税別）</small></div>
+        <div class="slots">30社限定・残り4枠</div>
+        <ul>
+          <li>スタンダードの全内容</li>
+          <li>複数職種・複数拠点の同時運用</li>
+          <li>採用戦略設計・定例改善会議</li>
+          <li>要件に応じた個別カスタマイズ</li>
+        </ul>
+        <a class="btn" href="#contact">このプランで相談する</a>
+      </div>
+    </div>
+    <div class="price-notes rv">
+      <div class="pn"><div class="k">初期費用</div><div class="v"><span class="hl">今なら0円</span>（通常10万円／1ヶ月以内のお申込で）</div></div>
+      <div class="pn"><div class="k">成果報酬</div><div class="v">採用1名につき 3〜5万円</div></div>
+      <div class="pn"><div class="k">最低契約期間</div><div class="v">1ヶ月（途中解約可）</div></div>
+      <div class="pn"><div class="k">着手スピード</div><div class="v">ご依頼から3営業日以内</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DIAGNOSIS ========== -->
+<section id="diagnosis">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-en">FREE DIAGNOSIS</div>
+      <h2>無料診断でお渡しする4つのレポート</h2>
+      <p class="sec-lead">契約前提ではありません。まずは御社の採用の現在地を、データで直視するところから。</p>
+    </div>
+    <div class="diag-grid">
+      <div class="diag rv"><div class="no">01</div><div><h3>求人原稿の「NGワード検知＆戦闘力」スコア</h3><p>既存の求人票を分析し、求職者が冷めるNGワードを検出。刺さるベネフィットの有無を100点満点でスコアリングします。</p></div></div>
+      <div class="diag rv d1"><div class="no">02</div><div><h3>競合市場での「御社の立ち位置」マップ</h3><p>同地域・同業他社との給与・待遇・見せ方を比較マトリクス化。どこで負けているかを事実ベースで提示します。</p></div></div>
+      <div class="diag rv d2"><div class="no">03</div><div><h3>ファネルの「漏れポイント」特定</h3><p>応募→面接設定→面接→内定→承諾の各段階を業界平均と比較し、人が逃げているボトルネックと原因を特定します。</p></div></div>
+      <div class="diag rv d3"><div class="no">04</div><div><h3>明日から使える「口説きのキラーフレーズ」</h3><p>次回の面接からすぐ使える具体的な質問・トークをお渡しします。辞退率の改善は即日始められます。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-en">FAQ</div>
+      <h2>よくあるご質問</h2>
+    </div>
+    <div class="faq-list rv">
+      <details>
+        <summary>本当に1ヶ月で解約できますか？</summary>
+        <div class="a">はい。最低契約期間は1ヶ月で、途中解約も可能です。成果で継続を判断していただくのがHIRE-Xのスタンスです。</div>
+      </details>
+      <details>
+        <summary>どの業種・職種でも対応できますか？</summary>
+        <div class="a">営業・事務・美容・販売・医療福祉・建設・物流など幅広く支援実績があります。無料診断の段階で、御社の職種での勝ち筋をご提示します。</div>
+      </details>
+      <details>
+        <summary>今使っている求人媒体はそのまま使えますか？</summary>
+        <div class="a">はい。Indeed・求人ボックス・Airワーク・ジョブメドレーなど既存媒体を活かした運用改善が基本です。新規媒体の追加提案も行います。</div>
+      </details>
+      <details>
+        <summary>依頼してからどのくらいで動き出しますか？</summary>
+        <div class="a">ご依頼から3営業日以内に着手します。求人原稿の改善は最初の1週間で反映されるケースがほとんどです。</div>
+      </details>
+      <details>
+        <summary>成果報酬はどのタイミングで発生しますか？</summary>
+        <div class="a">採用（内定承諾）1名につき3〜5万円を頂戴します。詳細な条件はプラン・職種によって異なるため、お打ち合わせ時にご説明します。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="sec-en rv">FREE DIAGNOSIS</div>
+    <h2 class="rv">御社の「採用の穴」、<br><span class="hl">10分で丸裸にします。</span></h2>
+    <p class="rv d1">まずは現状を直視するところから始めませんか？ 診断は無料・契約義務はありません。営業日1日以内にご連絡します。</p>
+    <form class="cta-form rv d2" id="diagForm" action="https://formsubmit.co/tmotoda8939@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="【HIRE-X LP】無料診断のお申し込み">
+      <input type="hidden" name="_next" value="https://tmotoda8939.github.io/hirex-lp/?sent=1#contact">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="text" name="会社名" placeholder="会社名" required>
+      <input type="text" name="ご担当者名" placeholder="ご担当者名" required>
+      <input type="email" name="メールアドレス" placeholder="メールアドレス" required>
+      <textarea name="お悩み" rows="3" placeholder="採用のお悩み（任意）例：Indeedに出しても応募が来ない"></textarea>
+      <button class="btn big" type="submit">無料診断を申し込む<span class="arw">→</span></button>
+    </form>
+    <p id="sentMsg" style="display:none;font-weight:900;color:var(--accent);font-size:18px;margin-top:8px">送信ありがとうございました。営業日1日以内にご連絡します。</p>
+    <p class="cta-note">しつこい営業は行いません。診断レポートのみのお渡しでも歓迎です。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div class="logo">HIRE<em style="color:var(--accent);font-style:normal">-</em>X</div>
+    <div>運営：株式会社Clutch ｜ "決まる採用"を現場からつくる</div>
+    <div>© 2026 Clutch Inc.</div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var els=[].slice.call(document.querySelectorAll('.rv'));
+    function check(){
+      if(!els.length)return;
+      var vh=window.innerHeight||document.documentElement.clientHeight;
+      els=els.filter(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.top<vh*0.92&&r.bottom>0){el.classList.add('on');return false}
+        return true;
+      });
+    }
+    ['scroll','resize','load'].forEach(function(ev){window.addEventListener(ev,check,{passive:true})});
+    if(location.search.indexOf('sent=1')>-1){
+      var f=document.getElementById('diagForm'),m=document.getElementById('sentMsg');
+      if(f){f.style.display='none'}if(m){m.style.display='block'}
+    }
+    document.addEventListener('DOMContentLoaded',check);
+    setInterval(check,600);
+    check();
+  })();
+</script>
+</body>
+</html>
