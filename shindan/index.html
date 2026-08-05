@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>求人原稿・スカウト文面 10秒辛口診断 | HIRE-X</title>
+<meta name="description" content="求人原稿・スカウト文面を貼り付けるだけ。10秒で採用のプロ基準の辛口診断。入力内容は外部送信されません。">
+<style>
+  :root{
+    --bg:#0c0e13;
+    --bg2:#12151d;
+    --ink:#f4f4f2;
+    --ink-dim:rgba(244,244,242,.66);
+    --accent:#e5ff3d;
+    --accent-ink:#11130a;
+    --danger:#ff5c47;
+    --warn:#ffb03d;
+    --line:rgba(244,244,242,.14);
+    --radius:18px;
+    --maxw:760px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg);color:var(--ink);
+    line-height:1.75;font-size:15px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .en{font-family:"Oswald","Noto Sans JP",sans-serif;letter-spacing:.12em}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+  /* ---------- header ---------- */
+  header{padding:34px 0 6px;text-align:center}
+  .logo{font-family:"Oswald",sans-serif;font-weight:700;font-size:20px;letter-spacing:.08em}
+  .logo em{color:var(--accent);font-style:normal}
+  .tool-label{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.22em;color:var(--accent);border:1px solid var(--accent);padding:4px 14px;border-radius:99px}
+  h1{font-size:clamp(24px,5.2vw,36px);font-weight:800;line-height:1.4;margin-top:14px}
+  h1 .hl{color:var(--accent)}
+  .lead{color:var(--ink-dim);font-size:13.5px;margin-top:10px}
+  .privacy-badge{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:11.5px;color:var(--ink-dim)}
+  .privacy-badge svg{flex:none}
+
+  /* ---------- input card ---------- */
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-top:26px}
+  .tabs{display:flex;gap:8px}
+  .tab{flex:1;padding:11px 8px;text-align:center;border:1px solid var(--line);border-radius:12px;cursor:pointer;font-size:13.5px;font-weight:700;color:var(--ink-dim);background:transparent;transition:all .15s}
+  .tab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  textarea{
+    width:100%;min-height:200px;margin-top:14px;padding:14px;
+    background:#0a0c10;border:1px solid var(--line);border-radius:12px;
+    color:var(--ink);font-family:inherit;font-size:14px;line-height:1.8;resize:vertical;
+  }
+  textarea:focus{outline:none;border-color:var(--accent)}
+  .input-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12px;color:var(--ink-dim)}
+  .sample-btn{background:none;border:none;color:var(--ink-dim);font-size:12px;text-decoration:underline;cursor:pointer}
+  .sample-btn:hover{color:var(--accent)}
+  .run-btn{
+    display:block;width:100%;margin-top:16px;padding:17px;
+    background:var(--accent);color:var(--accent-ink);
+    border:none;border-radius:14px;font-size:17px;font-weight:800;letter-spacing:.05em;
+    cursor:pointer;transition:transform .12s, box-shadow .2s;
+    font-family:inherit;
+  }
+  .run-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(229,255,61,.25)}
+  .run-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .ng-box{background:rgba(255,92,71,.1);border:1px solid var(--danger);border-radius:var(--radius);padding:18px 20px;margin-bottom:18px}
+  .ng-box h3{color:var(--danger);font-size:14px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .ng-box li{font-size:13px;margin:7px 0 0 20px;color:var(--ink)}
+  .ng-box li b{color:var(--danger)}
+  .ng-box .ng-note{font-size:11.5px;color:var(--ink-dim);margin-top:10px}
+
+  .type-card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:30px 24px;text-align:center;position:relative;overflow:hidden}
+  .type-card::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(229,255,61,.12),transparent 60%);pointer-events:none}
+  .verdict-label{font-size:12px;letter-spacing:.2em;color:var(--ink-dim)}
+  .type-name{font-size:clamp(26px,6vw,40px);font-weight:900;line-height:1.3;margin-top:10px}
+  .type-name .q1{color:var(--ink-dim);font-size:.55em;font-weight:700;vertical-align:middle}
+  .type-comment{margin:16px auto 0;max-width:520px;font-size:14px;color:var(--ink);background:rgba(244,244,242,.06);border-left:3px solid var(--accent);padding:12px 16px;text-align:left;border-radius:0 10px 10px 0}
+  .score-row{display:flex;justify-content:center;align-items:baseline;gap:14px;margin-top:22px}
+  .score-num{font-family:"Oswald",sans-serif;font-size:64px;font-weight:700;line-height:1;color:var(--accent)}
+  .score-num.low{color:var(--danger)}
+  .score-num.mid{color:var(--warn)}
+  .score-unit{font-size:14px;color:var(--ink-dim)}
+  .rank-badge{display:inline-block;font-family:"Oswald",sans-serif;font-size:26px;font-weight:700;border:2px solid currentColor;border-radius:10px;padding:2px 14px}
+  .rank-msg{margin-top:10px;font-size:13px;color:var(--ink-dim)}
+  .credit{margin-top:18px;font-size:10.5px;letter-spacing:.1em;color:var(--ink-dim)}
+
+  /* axis bars */
+  .axes{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-top:18px}
+  .axes h3{font-size:13px;letter-spacing:.14em;color:var(--ink-dim);margin-bottom:14px}
+  .axis{margin-top:12px}
+  .axis-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+  .axis-head .v{font-family:"Oswald",sans-serif;font-weight:600;color:var(--ink)}
+  .bar{height:8px;background:rgba(244,244,242,.1);border-radius:4px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:4px;width:0;transition:width .8s cubic-bezier(.2,.7,.3,1)}
+  .bar i.low{background:var(--danger)}
+  .bar i.mid{background:var(--warn)}
+
+  /* findings */
+  .findings{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-top:18px}
+  .findings h3{font-size:13px;letter-spacing:.14em;color:var(--ink-dim);margin-bottom:6px}
+  .finding{padding:12px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+  .finding:last-child{border-bottom:none}
+  .finding .tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:2px 8px;border-radius:6px;margin-right:8px;vertical-align:1px}
+  .tag.t-danger{background:rgba(255,92,71,.16);color:var(--danger)}
+  .tag.t-warn{background:rgba(255,176,61,.16);color:var(--warn)}
+  .tag.t-info{background:rgba(229,255,61,.14);color:var(--accent)}
+  .plus-alpha{margin-top:14px;font-size:12.5px;color:var(--ink-dim);border-top:1px solid var(--line);padding-top:12px}
+
+  /* pro diff + cta */
+  .pro-diff{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-top:18px}
+  .pro-diff h3{font-size:16px;font-weight:800;text-align:center}
+  .pro-diff h3 .hl{color:var(--accent)}
+  .diff-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  @media(max-width:560px){.diff-cols{grid-template-columns:1fr}}
+  .diff-col{border:1px solid var(--line);border-radius:12px;padding:16px}
+  .diff-col.pro{border-color:var(--accent);background:rgba(229,255,61,.05)}
+  .diff-col h4{font-size:12.5px;letter-spacing:.1em;color:var(--ink-dim);margin-bottom:8px}
+  .diff-col.pro h4{color:var(--accent)}
+  .diff-col li{font-size:12.5px;margin:6px 0 0 18px}
+  .cta-btn{
+    display:block;text-align:center;margin-top:18px;padding:18px;
+    background:var(--accent);color:var(--accent-ink);border-radius:14px;
+    font-size:16.5px;font-weight:800;text-decoration:none;letter-spacing:.04em;
+    transition:transform .12s, box-shadow .2s;
+  }
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(229,255,61,.25)}
+  .cta-sub{text-align:center;font-size:11.5px;color:var(--ink-dim);margin-top:10px}
+  .copy-btn{display:block;margin:14px auto 0;background:none;border:1px solid var(--line);color:var(--ink-dim);font-size:12px;padding:9px 22px;border-radius:99px;cursor:pointer;font-family:inherit}
+  .copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{margin:44px 0 110px;text-align:center;font-size:11px;color:var(--ink-dim)}
+  footer .disclaimer{max-width:560px;margin:10px auto 0;line-height:1.7}
+
+  /* fixed cta bar */
+  #ctaBar{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(12,14,19,.92);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);padding:10px 16px;
+    display:none;align-items:center;justify-content:center;gap:14px;
+  }
+  #ctaBar .bar-msg{font-size:12.5px;color:var(--ink-dim)}
+  #ctaBar .bar-msg b{color:var(--ink)}
+  #ctaBar a{flex:none;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:13.5px;padding:11px 20px;border-radius:10px;text-decoration:none}
+  @media(max-width:560px){#ctaBar .bar-msg{display:none}}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="logo">HIRE-<em>X</em></div>
+  <div class="tool-label en">FREE CHECK</div>
+  <h1>求人原稿・スカウト文面<br><span class="hl">10秒辛口診断</span></h1>
+  <p class="lead">貼り付けるだけ。採用のプロ基準で、あなたの原稿を丸裸にします。</p>
+  <div class="privacy-badge">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    入力内容はブラウザ内で処理され、外部に送信されません
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="card">
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tabJob" role="tab" aria-selected="true">求人原稿を診断</button>
+      <button class="tab" id="tabScout" role="tab" aria-selected="false">スカウト文面を診断</button>
+    </div>
+    <textarea id="inputText" placeholder="ここに求人原稿を貼り付けてください（タイトル・仕事内容・給与・休日など全文推奨）"></textarea>
+    <div class="input-meta">
+      <button class="sample-btn" id="sampleBtn" type="button">サンプル文で試してみる</button>
+      <span id="charCount">0字</span>
+    </div>
+    <button class="run-btn" id="runBtn" type="button">無料で辛口診断する</button>
+  </div>
+
+  <section id="result" aria-live="polite">
+    <div class="ng-box" id="ngBox" style="display:none">
+      <h3>⚠ 掲載リスク検出 — 先にここを直してください</h3>
+      <ul id="ngList"></ul>
+      <p class="ng-note">※法令（雇用対策法・男女雇用機会均等法など）や求人媒体の掲載ポリシーに抵触するおそれのある表現です。検出がある場合、総合スコアは59点が上限になります。</p>
+    </div>
+
+    <div class="type-card">
+      <div class="verdict-label" id="verdictLabel">あなたの求人原稿は…</div>
+      <div class="type-name"><span id="typeName"></span></div>
+      <p class="type-comment" id="typeComment"></p>
+      <div class="score-row">
+        <span class="score-num" id="scoreNum">0</span><span class="score-unit">/100点</span>
+        <span class="rank-badge" id="rankBadge">-</span>
+      </div>
+      <p class="rank-msg" id="rankMsg"></p>
+      <div class="credit">診断基準：HIRE-X「決まる採用」メソッド ／ © 株式会社Clutch</div>
+    </div>
+
+    <div class="axes">
+      <h3>5軸スコア</h3>
+      <div id="axisBars"></div>
+    </div>
+
+    <div class="findings">
+      <h3>プロの指摘</h3>
+      <div id="findingList"></div>
+      <p class="plus-alpha">※上記は自動診断で検出できた範囲です。HIRE-X基準ではここからさらに、競合求人との比較・ターゲット設計・週次ABテストで数値を伸ばす余地があります（プロ診断の範囲）。</p>
+    </div>
+
+    <div class="pro-diff">
+      <h3>この診断で分かるのは、<span class="hl">全体の3割</span>です。</h3>
+      <div class="diff-cols">
+        <div class="diff-col">
+          <h4>無料診断（いまここ）</h4>
+          <ul>
+            <li>表現パターンの自動チェック</li>
+            <li>掲載リスクの機械検出</li>
+            <li>タイプ判定と改善の方向性</li>
+          </ul>
+        </div>
+        <div class="diff-col pro">
+          <h4>プロの無料診断（10分）</h4>
+          <ul>
+            <li>競合求人と並べた「負けている理由」の特定</li>
+            <li>ターゲット設計と訴求コピーの具体案</li>
+            <li>応募〜面談〜辞退防止までの導線チェック</li>
+          </ul>
+        </div>
+      </div>
+      <a class="cta-btn" id="ctaMain" href="#" target="_blank" rel="noopener">プロに10分で丸裸にしてもらう（無料）</a>
+      <p class="cta-sub">診断は無料・契約義務はありません。営業日1日以内にご連絡します。</p>
+      <button class="copy-btn" id="copyBtn" type="button">診断結果をテキストでコピー</button>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div>© 株式会社Clutch ／ HIRE-X「決まる採用」</div>
+  <p class="disclaimer">本診断は表現パターンに基づく簡易チェックであり、法的判断や媒体の掲載可否を保証するものではありません。年齢制限の例外事由（雇用対策法施行規則第1条の3）等に該当する場合、リスク検出が当てはまらないことがあります。</p>
+</footer>
+
+<div id="ctaBar">
+  <span class="bar-msg">判定：<b id="barType"></b> — このまま出し続けると機会損失です</span>
+  <a href="#" id="ctaBarLink">無料でプロ診断を受ける</a>
+</div>
+
+<script>
+"use strict";
+/* ================= 設定 =================
+   CTA_URL: リード獲得フォームのURL。LPに埋め込む場合は "#contact" に変更。
+   診断タイプ名は ?shindan= で引き継ぐ（LP側フォームに hidden field 追加で営業の会話起点に使う） */
+const CTA_URL = "https://tmotoda8939.github.io/hirex-lp/";
+const CTA_HASH = "#contact";
+
+/* GA4接続ポイント（タグ発行後に gtag('event',...) を接続。現状は何も送らない） */
+function track(eventName, params){ /* no-op until GA4 tag approved */ }
+
+/* ================= ユーティリティ ================= */
+const z2h = s => s.replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+const clamp = (v,min,max) => Math.max(min, Math.min(max, v));
+const count = (text, re) => (text.match(re) || []).length;
+
+/* ================= NG検出（法令・掲載ポリシー） ================= */
+const NG_RULES = [
+  {re:/\d{2}\s*(歳|才)\s*(以下|まで|未満)/, label:"年齢制限表現", fix:"年齢制限は原則禁止（雇用対策法10条）。例外事由に該当する場合のみ理由を明記"},
+  {re:/(若手|若い方|シニア|中高年)(の方)?(のみ|限定)/, label:"年齢層の限定", fix:"「20代活躍中」など事実の記載に言い換える"},
+  {re:/\d{2}\s*代\s*(のみ|限定|まで)/, label:"年代の限定", fix:"「◯◯代活躍中」など事実の記載に言い換える"},
+  {re:/(男性|女性|男子|女子)\s*(のみ|限定|歓迎|求む|希望|優遇)/, label:"性別の限定・優遇", fix:"性別を限定する募集は原則禁止（男女雇用機会均等法5条）"},
+  {re:/(ウェイトレス|ウエイター|営業マン|看護婦|保母|スチュワーデス|セールスマン|ホールレディ|女将)/, label:"性別を含む職種名", fix:"接客スタッフ／営業職／看護師／保育士など性別中立の職種名へ"},
+  {re:/(日本人|外国人)\s*(のみ|限定|歓迎|不可|お断り)/, label:"国籍による限定", fix:"国籍による限定・排除は不可"},
+  {re:/(本籍|出身地|家族構成|容姿|身長|体重|体型)\s*(重視|要件|必須|による)/, label:"差別につながる条件", fix:"適性・能力と無関係な条件は削除する"},
+  {re:/健康な方|障がい者不可|喫煙者不可/, label:"就業差別のおそれ", fix:"業務上の必要性がある場合のみ、具体的な業務要件として記載"},
+  {re:/(必ず|絶対|確実に).{0,8}(稼げ|儲か|昇給)|誰でも簡単に高収入|楽して稼/, label:"誇大表現", fix:"根拠のない断定・誇大表現は掲載停止リスク。実績数値に置き換える"},
+];
+
+/* 固定残業の内訳チェック（NGとは別枠で判定に使用） */
+function checkFixedOvertime(t){
+  if(!/(固定残業|みなし残業|定額残業)/.test(t)) return null;
+  const missing = [];
+  if(!/\d[\d,，]*\s*円/.test(t)) missing.push("金額");
+  if(!/\d+\s*時間/.test(t)) missing.push("時間数");
+  if(!/(超過|超える分|別途支給)/.test(t)) missing.push("超過分の支払明記");
+  return missing.length ? missing : null;
+}
+
+/* ================= 求人原稿 採点 ================= */
+const ABSTRACT_WORDS = /(アットホーム|やりがい|風通しの良い|和気あいあい|明るい職場|やる気|向上心|人間関係が良|チームワーク|成長できる環境|活気ある)/g;
+const TEMPLATE_SMELL = /(当社は.{0,10}創業以来|地域に密着|お客様第一|社員一人ひとり|共に成長|多様な人材)/g;
+
+function scoreJob(raw){
+  const t = z2h(raw);
+  const findings = [];
+  const add = (sev, axis, text) => findings.push({sev, axis, text});
+
+  /* A. 具体性 */
+  const nums = count(t, /\d+/g);
+  let A = nums>=12?100 : nums>=8?80 : nums>=5?60 : nums>=3?40 : 20;
+  const abst = count(t, ABSTRACT_WORDS);
+  A -= abst*8;
+  const hasSalary = /\d+\s*(万円|円)/.test(t);
+  const hasHoliday = /年間休日\s*\d{2,3}/.test(t);
+  const hasOvertime = /残業.{0,6}(平均)?\s*\d+\s*(時間|h|H)/.test(t);
+  if(!hasSalary) A -= 15;
+  if(!hasHoliday) A -= 15;
+  if(!hasOvertime) A -= 15;
+  A = clamp(A,0,100);
+  if(abst>=3 && nums<5) add("danger","A","「アットホーム」「やりがい」は自社評価です。候補者が他社と比較できる数字がほぼゼロ。条件で勝る競合に一瞬で流れます。");
+  else if(abst>=2) add("warn","A",`抽象ワードを${abst}件検出。形容詞を1つ削るごとに、数字を1つ足してください（月収・年間休日・残業時間・人数）。`);
+  if(!hasHoliday || !hasOvertime) add("warn","A","年間休日・残業時間の数値は応募判断の3大材料です。書かない＝「悪いから隠している」と読まれます。");
+
+  /* B. ターゲット明確さ */
+  let B = 100;
+  const hasExp = /(未経験|経験者|実務経験|第二新卒|ブランク|異業種)/.test(t);
+  const hasPersona = /(こんな方|求める人物像|向いている|ご経験のある方|活かせ)/.test(t);
+  const hasSkill = /(免許|資格|歓迎スキル|必須条件|優遇)/.test(t);
+  if(!hasExp) B -= 30;
+  if(!hasPersona) B -= 20;
+  if(!hasSkill) B -= 15;
+  if(/未経験歓迎/.test(t) && !hasSkill){ B -= 20; add("warn","B","「未経験歓迎」で間口を広げた結果、誰の胸にも刺さっていません。来てほしい一人を決めて、その人に向けて書き直してください。"); }
+  else if(!hasPersona) add("warn","B","「どんな人に来てほしいか」が原稿から読み取れません。求める人物像がないと、候補者は自分ごと化できません。");
+  B = clamp(B,0,100);
+
+  /* C. 待遇透明性 */
+  let C = 100;
+  const hasRange = /\d+\s*万?円?\s*(〜|~|ー|-|から)\s*\d+\s*万円/.test(t);
+  if(!hasRange){ C -= 25; add("danger","C","給与レンジ（◯万円〜◯万円）が見当たりません。「聞かないと分からない＝面倒」で応募前に離脱される最大要因です。"); }
+  if(!/(賞与|ボーナス)/.test(t)) C -= 10;
+  if(!/昇給/.test(t)) C -= 10;
+  const fo = checkFixedOvertime(t);
+  if(fo){ C -= fo.length*20; add("danger","C",`固定残業代の記載に「${fo.join("・")}」がありません。金額・時間数・超過分支払の3点セットは法令上も媒体ポリシー上も必須です。`); }
+  if(!/(通勤|住宅|家族|資格|皆勤|役職)手当/.test(t)) C -= 10;
+  if(!/(社会保険|各種保険|社保完備)/.test(t)) C -= 10;
+  const vague = count(t, /(応相談|要相談|当社規定による|規定に準ずる|経験を考慮)/g);
+  if(vague>=3){ C -= 15; add("warn","C",`「応相談」「当社規定による」を${vague}件検出。開示しない項目が多いほど、候補者の不安と離脱は増えます。`); }
+  C = clamp(C,0,100);
+
+  /* D. 差別化 */
+  let D = 100;
+  const unique = count(t, /((創業|設立)\s*\d+|シェア|特許|自社開発|直請け|元請|上場|従業員\s*\d+\s*(名|人))/g);
+  if(unique===0) D -= 30; else if(unique<=2) D -= 15;
+  const hasVoice = /(先輩|社員の声|入社\s*\d+年目|事例|1日の流れ|スケジュール)/.test(t);
+  if(!hasVoice){ D -= 25; add("warn","D","働く人の顔が見えません。「入社2年目社員の1日」を1段落足すだけで、原稿の温度は変わります。"); }
+  const tmpl = count(t, TEMPLATE_SMELL);
+  D -= tmpl*10;
+  if(tmpl>=1 && unique===0) add("danger","D","社名を入れ替えてもそのまま成立する原稿です。候補者に「この会社を選ぶ理由」を1つも渡せていません。");
+  const len = t.length;
+  if(len<800){ D -= 20; add("warn","D",`全文${len}字は情報量不足です。比較検討の土俵に乗るには800字以上、理想は1,200〜2,000字です。`); }
+  else if(len>2500) D -= 10;
+  D = clamp(D,0,100);
+
+  /* E. リスク表現・信頼性 */
+  let E = 100;
+  const exagg = count(t, /(必ず|絶対|確実に).{0,8}(稼げ|儲か|昇給|正社員)|誰でも簡単|楽して/g);
+  E -= exagg*15;
+  if(/(急募|大量募集|随時募集)/.test(t)){ E -= 10; add("info","E","「急募」「大量募集」は候補者側から「定着していない会社」と読まれることがあります。募集背景（増員・欠員補充など）を書く方が信頼されます。"); }
+  if(/\d{2,4}-\d{2,4}-\d{4}|[\w.]+@[\w.]+/.test(t)) E -= 10;
+  if(/正社員登用あり/.test(t) && !/(登用実績|\d+\s*名が登用)/.test(t)){ E -= 10; add("info","E","「正社員登用あり」は実績（◯年で◯名）がないと信用されません。"); }
+  E = clamp(E,0,100);
+
+  /* NG検出 */
+  const ngs = NG_RULES.filter(r => r.re.test(t));
+
+  /* 総合（重み: A30/C25/B20/D15/E10） */
+  let total = Math.round(A*.30 + C*.25 + B*.20 + D*.15 + E*.10);
+  total = Math.min(total, 95); // 満点は出さない設計
+  if(ngs.length) total = Math.min(total, 59);
+
+  /* タイプ判定 */
+  const axes = {A,B,C,D,E};
+  let type;
+  if(total>=75 && ngs.length===0 && abst<3){
+    type = "伝わる営業コピー型";
+  } else {
+    const worst = Object.entries(axes).sort((a,b)=>a[1]-b[1])[0][0];
+    type = {A:"アットホーム呪文型", B:"スペック羅列カタログ型", C:"上から目線・選考様式型", D:"量産テンプレコピペ型", E:"上から目線・選考様式型"}[worst];
+    if(abst>=3 && type!=="アットホーム呪文型" && A<=Math.min(B,C,D,E)+10) type = "アットホーム呪文型";
+  }
+  const TYPE_COMMENTS = {
+    "アットホーム呪文型":"「アットホーム」「やりがい」は、書いた側だけが満足する呪文です。候補者が知りたいのは雰囲気ではなく、数字と根拠。呪文を1つ消すたびに応募は増えます。",
+    "スペック羅列カタログ型":"情報は並んでいるのに、「誰に来てほしいか」が不在です。カタログは読まれても、応募ボタンは押されません。読み手を一人に絞ってください。",
+    "上から目線・選考様式型":"条件は開示せず、要求だけが並んでいます。候補者から見ると「選ばれる前から選んでくる会社」。今の採用市場では、先に手の内を見せた側が勝ちます。",
+    "量産テンプレコピペ型":"社名を差し替えてもそのまま使える原稿です。テンプレは書くのは楽ですが、候補者に「この会社を選ぶ理由」を1つも渡せません。",
+    "伝わる営業コピー型":"基礎はできています。ここから先は原稿単体ではなく、競合との相対比較と週次ABテスト、面談導線の設計勝負です。"
+  };
+  return {mode:"job", axes, axisNames:{A:"具体性（数字の密度）",B:"ターゲット明確さ",C:"待遇の透明性",D:"差別化",E:"リスク表現・信頼性"},
+          total, ngs, findings, type, typeComment:TYPE_COMMENTS[type]};
+}
+
+/* ================= スカウト文面 採点 ================= */
+function scoreScout(raw){
+  const t = z2h(raw);
+  const findings = [];
+  const add = (sev, axis, text) => findings.push({sev, axis, text});
+
+  /* A. パーソナライズ */
+  const R = count(t, /(あなた|貴殿|様の|ご経歴|ご経験|プロフィールを拝見|経歴を拝見|ご在籍|現職で|培われ)/g);
+  const Cn = count(t, /(当社|弊社|私たち|我々|自社|当グループ)/g);
+  const ratio = (R+Cn)===0 ? 0 : R/(R+Cn);
+  let A = ratio>=0.55?100 : ratio>=0.4?75 : ratio>=0.25?50 : 20;
+  const headHasRef = /(拝見|ご経歴|ご経験|スキル)/.test(t.slice(0,100));
+  if(!headHasRef){ A -= 30; add("danger","A","冒頭100字に相手の経歴への言及がありません。一斉送信は3秒でバレます。開封されても最初の2行で閉じられています。"); }
+  if(ratio<0.25 && (R+Cn)>0) add("danger","A",`主語が「弊社」だらけです（相手への言及${R}回 vs 自社${Cn}回）。相手はあなたの会社紹介を読みに来ていません。`);
+  A = clamp(A,0,100);
+
+  /* B. 件名・冒頭フック */
+  let B = 100;
+  const firstLine = t.split(/\n/)[0] || "";
+  const looksSubject = firstLine.length<=40;
+  if(looksSubject && (firstLine.length<12 || firstLine.length>28)) B -= 10;
+  if(/(スカウトのご案内|求人のお知らせ|【重要】|必見)/.test(t)){ B -= 20; add("warn","B","「スカウトのご案内」「【重要】」は開封率を下げる定型句です。件名に相手の職種・スキルなど固有の言葉を入れてください。"); }
+  if(/^はじめまして。?私は/.test(t.trim())){ B -= 15; add("warn","B","「はじめまして。私は〜」の書き出しは自己紹介から始まる典型パターン。1行目は相手の話から始めてください。"); }
+  B = clamp(B,0,100);
+
+  /* C. 自分語り比率 */
+  const sentences = t.split(/。/).filter(s=>s.trim().length>0);
+  const selfChars = sentences.filter(s=>/(当社|弊社|事業内容|沿革|理念|私たち)/.test(s)).join("").length;
+  const selfRatio = t.length? selfChars/t.length : 0;
+  let Cx = selfRatio>0.4?20 : selfRatio>0.25?50 : 90;
+  const avgLen = sentences.length? t.length/sentences.length : 0;
+  if(avgLen>60){ Cx -= 15; add("warn","C","一文が長すぎます（平均60字超）。スマホで読まれる前提で、一文40字以内に切ってください。"); }
+  if(selfRatio>0.4) add("danger","C","文面の4割以上が自社説明です。会社アピールの圧は強いのに「なぜあなたなのか」が不在。口説く前に自己紹介で終わっています。");
+  Cx = clamp(Cx,0,100);
+
+  /* D. 具体的オファー */
+  let D = 100;
+  if(!/\d+\s*万?円?\s*(〜|~)/.test(t)){ D -= 30; add("danger","D","想定年収レンジがありません。条件を伏せたまま「話を聞いてほしい」は、転職検討者には最も動きにくい依頼です。"); }
+  if(!/(エンジニア|営業|マネージャー|リーダー|責任者|担当|職|ポジション|スタッフ)/.test(t)) D -= 20;
+  if(!/(だからこそ|という点で|活かせ|マッチ|ぴったり)/.test(t)){ D -= 20; add("warn","D","「なぜあなたに送ったのか」の理由が書かれていません。経歴のどこに惹かれたかを1文入れるだけで返信率は変わります。"); }
+  D = clamp(D,0,100);
+
+  /* E. 返信ハードル */
+  let E;
+  const len = t.length;
+  if(len>=400 && len<=900) E = 100;
+  else if((len>900 && len<=1300) || (len>=250 && len<400)) E = 70;
+  else E = 30;
+  if(len>1300) add("warn","E",`${len}字は長すぎます。長文＝熱意ではなく負担。スマホで3スクロールした時点で返信率は落ちます（適正は400〜900字）。`);
+  if(len<250 && len>0) add("warn","E",`${len}字は短すぎて「なぜ自分に？」に答えられていません（適正は400〜900字）。`);
+  const lowCta = /(15分|30分|カジュアル|情報交換|オンラインで|お話だけ|一言|お気軽)/.test(t);
+  const applyCta = /(応募|エントリー|履歴書|職務経歴書)(を|して)?(お願い|ください)/.test(t);
+  if(!lowCta){ E -= 30; add("danger","E","返信の入口が高すぎます。「まずは15分だけカジュアルに」のような低ハードルの選択肢を必ず用意してください。"); }
+  if(applyCta && !lowCta) add("danger","E","CTAが「ご応募ください」のみ。いきなり応募は心理的ハードルが高すぎます。カジュアル面談に落としてください。");
+  E = clamp(E,0,100);
+
+  const ngs = NG_RULES.filter(r => r.re.test(t));
+
+  /* 総合（重み: A30/D25/C20/B15/E10） */
+  let total = Math.round(A*.30 + D*.25 + Cx*.20 + B*.15 + E*.10);
+  total = Math.min(total, 95);
+  if(ngs.length) total = Math.min(total, 59);
+
+  const axes = {A, B, C:Cx, D, E};
+  let type;
+  if(total>=75 && ngs.length===0){
+    type = "刺さる一通型";
+  } else {
+    const worst = Object.entries(axes).sort((a,b)=>a[1]-b[1])[0][0];
+    type = {A:"一斉送信スパム型", B:"丁寧すぎる他人行儀型", C:"圧強め口説き不足型", D:"圧強め口説き不足型", E:"沈黙後追い型"}[worst];
+  }
+  const TYPE_COMMENTS = {
+    "一斉送信スパム型":"宛名を差し替えれば誰にでも送れる文面です。受け取った側は3秒で見抜きます。スカウトは「あなただから送った」が伝わらなければ、届いた瞬間にゴミ箱行きです。",
+    "丁寧すぎる他人行儀型":"礼儀は満点、フックは0点。丁寧さは差別化になりません。最初の2行で相手の経歴に触れ、「読む理由」を渡してください。",
+    "圧強め口説き不足型":"会社アピールの圧は強いのに、「なぜあなたなのか」が不在です。口説いているつもりで、自己紹介で終わっています。",
+    "沈黙後追い型":"返信の入口が用意されていません。このまま送ると既読スルー→後追い連投のループに入ります。低ハードルのCTAを1つ置いてください。",
+    "刺さる一通型":"骨格は合格です。ここから先は職種×相手タイプごとの件名ABテストで、返信率を数字で伸ばすフェーズです。"
+  };
+  return {mode:"scout", axes, axisNames:{A:"パーソナライズ",B:"件名・冒頭フック",C:"自分語り比率",D:"具体的オファー",E:"返信ハードルの低さ"},
+          total, ngs, findings, type, typeComment:TYPE_COMMENTS[type]};
+}
+
+/* ================= サンプル文 ================= */
+const SAMPLE_JOB = `【急募】営業スタッフ大量募集！
+アットホームで風通しの良い職場です。やりがいのある仕事で、あなたのやる気を活かせます！
+当社は創業以来、地域に密着しお客様第一で歩んでまいりました。社員一人ひとりが輝ける、成長できる環境です。
+未経験歓迎！明るい職場で先輩が優しく教えます。
+給与:当社規定による(経験を考慮) 賞与:応相談 休日:シフト制(詳細は面接時)
+チームワークを大切にできる、健康な方をお待ちしています!`;
+const SAMPLE_SCOUT = `はじめまして。私は株式会社サンプルの採用担当です。
+当社は創業15年、業界シェアトップクラスの成長企業です。私たちは「挑戦」を大切にしており、事業内容は多岐にわたります。弊社の理念は「共に成長すること」。当社では現在、事業拡大に伴い積極採用を行っております。
+弊社にご興味をお持ちいただけましたら、ぜひ履歴書と職務経歴書をお送りのうえご応募ください。よろしくお願いいたします。`;
+
+/* ================= UI ================= */
+let mode = "job";
+const $ = id => document.getElementById(id);
+const input = $("inputText");
+
+function setMode(m){
+  mode = m;
+  $("tabJob").classList.toggle("active", m==="job");
+  $("tabScout").classList.toggle("active", m==="scout");
+  $("tabJob").setAttribute("aria-selected", m==="job");
+  $("tabScout").setAttribute("aria-selected", m==="scout");
+  input.placeholder = m==="job"
+    ? "ここに求人原稿を貼り付けてください（タイトル・仕事内容・給与・休日など全文推奨）"
+    : "ここにスカウト文面を貼り付けてください（件名がある場合は1行目に）";
+  $("result").style.display = "none";
+  $("ctaBar").style.display = "none";
+}
+$("tabJob").addEventListener("click", ()=>setMode("job"));
+$("tabScout").addEventListener("click", ()=>setMode("scout"));
+input.addEventListener("input", ()=>{ $("charCount").textContent = input.value.length + "字"; });
+$("sampleBtn").addEventListener("click", ()=>{
+  input.value = mode==="job" ? SAMPLE_JOB : SAMPLE_SCOUT;
+  input.dispatchEvent(new Event("input"));
+});
+
+function rankOf(total){
+  if(total>=90) return {r:"A", msg:"改善余地はわずか。運用とABテストのフェーズです。", cls:""};
+  if(total>=75) return {r:"B", msg:"あと一歩。伸びしろが明確に残っています。", cls:""};
+  if(total>=60) return {r:"C", msg:"いま、この瞬間も機会損失が発生しています。", cls:"mid"};
+  if(total>=40) return {r:"D", msg:"このまま出し続けるのは危険です。要改善。", cls:"low"};
+  return {r:"E", msg:"早急な見直しが必要です。応募・返信が来ないのは偶然ではありません。", cls:"low"};
+}
+
+let lastResult = null;
+$("runBtn").addEventListener("click", ()=>{
+  const text = input.value.trim();
+  if(text.length < 30){
+    alert("診断には30字以上のテキストが必要です。原稿の全文を貼り付けてください。");
+    return;
+  }
+  const res = mode==="job" ? scoreJob(text) : scoreScout(text);
+  lastResult = res;
+  render(res);
+  track("shindan_run", {mode, type: res.type, score: res.total});
+});
+
+function render(res){
+  /* NG */
+  const ngBox = $("ngBox");
+  if(res.ngs.length){
+    ngBox.style.display = "block";
+    $("ngList").innerHTML = res.ngs.map(n=>`<li><b>${n.label}</b> — ${n.fix}</li>`).join("");
+  } else ngBox.style.display = "none";
+
+  /* type card */
+  $("verdictLabel").textContent = res.mode==="job" ? "あなたの求人原稿は…" : "あなたのスカウト文面は…";
+  $("typeName").textContent = res.type;
+  $("typeComment").textContent = res.typeComment;
+  const rk = rankOf(res.total);
+  const sn = $("scoreNum");
+  sn.textContent = res.total;
+  sn.className = "score-num " + rk.cls;
+  const badge = $("rankBadge");
+  badge.textContent = rk.r;
+  badge.style.color = rk.cls==="low" ? "var(--danger)" : rk.cls==="mid" ? "var(--warn)" : "var(--accent)";
+  $("rankMsg").textContent = rk.msg;
+
+  /* axes */
+  $("axisBars").innerHTML = Object.entries(res.axes).map(([k,v])=>{
+    const cls = v<40?"low":v<70?"mid":"";
+    return `<div class="axis">
+      <div class="axis-head"><span>${res.axisNames[k]}</span><span class="v">${v}</span></div>
+      <div class="bar"><i class="${cls}" data-w="${v}"></i></div>
+    </div>`;
+  }).join("");
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    document.querySelectorAll(".bar i").forEach(el=>{ el.style.width = el.dataset.w + "%"; });
+  }));
+
+  /* findings: 重大度順に最大5件 */
+  const sevOrder = {danger:0, warn:1, info:2};
+  const list = [...res.findings].sort((a,b)=>sevOrder[a.sev]-sevOrder[b.sev]).slice(0,5);
+  $("findingList").innerHTML = list.length
+    ? list.map(f=>{
+        const tag = f.sev==="danger" ? '<span class="tag t-danger">要改善</span>' : f.sev==="warn" ? '<span class="tag t-warn">注意</span>' : '<span class="tag t-info">TIPS</span>';
+        return `<div class="finding">${tag}${f.text}</div>`;
+      }).join("")
+    : '<div class="finding"><span class="tag t-info">TIPS</span>自動検出できる大きな問題はありませんでした。ここから先は競合比較とABテストの領域です。</div>';
+
+  /* CTA */
+  const ctaHref = CTA_URL + "?shindan=" + encodeURIComponent(res.type) + CTA_HASH;
+  $("ctaMain").href = ctaHref;
+  $("ctaBarLink").href = ctaHref;
+  $("barType").textContent = res.type + "（" + res.total + "点）";
+
+  $("result").style.display = "block";
+  $("ctaBar").style.display = "flex";
+  $("result").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+$("copyBtn").addEventListener("click", ()=>{
+  if(!lastResult) return;
+  const r = lastResult;
+  const axisLines = Object.entries(r.axes).map(([k,v])=>`・${r.axisNames[k]}: ${v}点`).join("\n");
+  const text = `【HIRE-X 10秒辛口診断】\n判定タイプ: ${r.type}\n総合スコア: ${r.total}/100点\n${axisLines}\n${r.ngs.length?`⚠掲載リスク検出: ${r.ngs.map(n=>n.label).join("、")}\n`:""}▼無料のプロ診断はこちら\n${CTA_URL}`;
+  navigator.clipboard.writeText(text).then(()=>{
+    $("copyBtn").textContent = "コピーしました ✓";
+    setTimeout(()=>{ $("copyBtn").textContent = "診断結果をテキストでコピー"; }, 2000);
+  });
+  track("shindan_copy", {type:r.type});
+});
+
+/* CTAクリック計測 */
+$("ctaMain").addEventListener("click", ()=>track("shindan_cta_click", {pos:"main", type:lastResult?.type}));
+$("ctaBarLink").addEventListener("click", ()=>track("shindan_cta_click", {pos:"bar", type:lastResult?.type}));
+</script>
+</body>
+</html>
