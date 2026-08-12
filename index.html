@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<!-- Google tag (gtag.js) / GA4: G-GQYWWZXVJS / 2026-08-13 CEO承認済み -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQYWWZXVJS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GQYWWZXVJS');
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HIRE-X｜"決まる採用"を現場からつくる採用代行（RPO）</title>
@@ -599,7 +608,7 @@
     <div class="sec-en rv">FREE DIAGNOSIS</div>
     <h2 class="rv">御社の「採用の穴」、<br><span class="hl">10分で丸裸にします。</span></h2>
     <p class="rv d1">まずは現状を直視するところから始めませんか？ 診断は無料・契約義務はありません。営業日1日以内にご連絡します。</p>
-    <form class="cta-form rv d2" id="diagForm" action="https://formsubmit.co/tmotoda8939@gmail.com" method="POST">
+    <form class="cta-form rv d2" id="diagForm" action="https://formsubmit.co/28cbeee681211444284857dacb25a12f" method="POST">
       <input type="hidden" name="_subject" value="【HIRE-X LP】無料診断のお申し込み">
       <input type="hidden" name="_next" value="https://tmotoda8939.github.io/hirex-lp/?sent=1#contact">
       <input type="hidden" name="_captcha" value="false">
@@ -650,6 +659,20 @@
     setInterval(check,600);
     check();
   })();
+</script>
+
+<script>
+/* GA4: フォーム送信イベント（2026-08-13追加） */
+(function(){
+  var f = document.querySelector('form[action*="formsubmit.co"]');
+  if(!f) return;
+  f.addEventListener('submit', function(){
+    try{
+      var t = (f.querySelector('input[name="セルフ診断タイプ"]')||{}).value || '';
+      gtag('event', 'generate_lead', {shindan_type: t, transport_type: 'beacon'});
+    }catch(e){}
+  });
+})();
 </script>
 </body>
 </html>
